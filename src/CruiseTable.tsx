@@ -11,24 +11,25 @@ const CruiseTable: React.FC = () => {
       <h1>Total Area: {totalArea}</h1>
       <table>
         <thead>
-          <tr>
-            <th>Entry ID</th>
-            <th>Ship Name</th>
-            <th>Total Area</th>
-            <th>Year</th>
+        <tr>
+            <th className="py-2 px-4 border-b">Entry ID</th>
+            <th className="py-2 px-4 border-b">Ship Name</th>
+            <th className="py-2 px-4 border-b">Total Area</th>
+            <th className="py-2 px-4 border-b">Year</th>
           </tr>
-        </thead>
+                  </thead>
         <tbody>
           {cruises.map((cruise, index) => (
-            <tr key={`${cruise.entry_id}-${index}`}>
-                <td>{cruise.entry_id}</td>
-                <td>{cruise.platform_id}</td>
-                <td>{cruise.total_area}</td>
-                <td>{cruise.year}</td>
-            </tr>
+          <tr key={`${cruise.entry_id}-${index}`} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+          <td className="py-2 px-4">{cruise.entry_id}</td>
+          <td className="py-2 px-4">{cruise.platform_id}</td>
+          <td className="py-2 px-4">{cruise.total_area}</td>
+          <td className="py-2 px-4">{cruise.year}</td>
+        </tr>
           ))}
         </tbody>
       </table>
+        {/* Pagination */}
     </div>
   );
 };
