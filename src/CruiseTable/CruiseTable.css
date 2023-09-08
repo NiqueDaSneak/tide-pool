@@ -1,0 +1,60 @@
+
+/* Container for the table and controls */
+.table-container {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border-radius: 4px;
+}
+
+/* Sort button and items-per-page dropdown */
+.sort-button, .items-per-page-select {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Table styles */
+.cruise-table {
+  width: fit-content;
+  border-collapse: collapse;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.cruise-table th, .cruise-table td {
+  border: 1px solid var(--text-color);
+  padding: 8px;
+  text-align: left;
+}
+
+.cruise-table th {
+  background-color: var(--secondary-color);
+  color: black
+}
+
+/* Zebra-striping for table rows */
+.cruise-table tr:nth-child(even) {
+  background-color: var(--table-row-even);
+  color: var(--table-row-text);
+}
+
+.cruise-table tr:nth-child(odd) {
+  background-color: var(--table-row-odd);
+  color: var(--table-row-text);
+}
+
+
+/* Improved table typography and spacing */
+.cruise-table th, .cruise-table td {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 12px 16px;
+}
+
+/* Improved container spacing */
+.table-container {
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
