@@ -8,50 +8,37 @@ interface CruiseTableProps {
   selectedYear: string | null;
 }
 
-
 const CruiseTable: React.FC<CruiseTableProps> = ({ selectedShip, selectedYear }) => {
   const dispatch = useDispatch();
   const { cruises, sortOrder, itemsPerPage, currentPage } = useSelector((state: { main: MainSliceState }) => state.main);
 
-  // Check if cruises is iterable
   if (!Array.isArray(cruises)) {
     return <div>Loading...</div>;
   }
 
-  // Sort cruises by date
   const sortedCruises = [...cruises].sort((a, b) => {
     const dateA = new Date(a.year);
     const dateB = new Date(b.year);
     return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
   });
 
-  
+  const filteredCruises = sortedCruises.filter(cruise => 
+    (!selectedShip || cruise.platform_id === selectedShip) &&
+    (!selectedYear || cruise.year === selectedYear)
+  );
 
-  // Filter cruises by selected ship and year
-  const filteredCruises = sortedCruises.filter(cruise => {
-    return (selectedShip ? cruise.platform_id === selectedShip : true) &&
-           (selectedYear ? cruise.year === selectedYear : true);
-  });
-
-  // Update pagination logic to use filteredCruises
   const totalPages = Math.ceil(filteredCruises.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedCruises = filteredCruises.slice(startIndex, endIndex);
-  
+
   return (
     <div className="table-container">
-      <div style={{ 
-        marginBottom: '40px', 
-        display: 'grid',
-        gap: '10px',
-        justifyItems: 'start'
-      }} 
-      className="flex justify-between mb-4">
+      <div className="flex justify-between mb-4">
         <button className="sort-button button" onClick={() => dispatch(setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'))}>
           Sort by Date ({sortOrder})
         </button>
-        <select style={{color: 'black'}} className="items-per-page-select" onChange={(e) => dispatch(setItemsPerPage(Number(e.target.value)))}>
+        <select className="items-per-page-select" onChange={(e) => dispatch(setItemsPerPage(Number(e.target.value)))}>
           <option value="10">Show 10</option>
           <option value="20">Show 20</option>
           <option value="30">Show 30</option>
@@ -81,15 +68,7 @@ const CruiseTable: React.FC<CruiseTableProps> = ({ selectedShip, selectedYear })
           ))}
         </tbody>
       </table>
-      <div style={{
-        marginTop: '40px',
-        display: 'grid',
-        justifyContent: 'start',
-        gridTemplateColumns: 'auto auto auto',
-        justifyItems: 'center',
-        alignItems: 'center',
-        gap: '20px'
-      }} className="pagination">
+      <div className="pagination">
         <button className="button" onClick={() => dispatch(setCurrentPage(currentPage - 1))} disabled={currentPage === 1}>
           Previous
         </button>
