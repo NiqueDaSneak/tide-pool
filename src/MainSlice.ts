@@ -1,13 +1,27 @@
-import { createSlice, Slice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Cruise } from './types';
 
-export type MainSliceState = {
-  //
+export interface MainSliceState {
+  cruises: Cruise[];
+  totalArea: number;
+}
+
+const initialState: MainSliceState = {
+  cruises: [],
+  totalArea: 0,
 };
 
-const initialState: MainSliceState = {};
-
-export const mainSlice: Slice<MainSliceState> = createSlice({
+export const mainSlice = createSlice({
   name: 'main',
   initialState,
-  reducers: {},
+  reducers: {
+    setCruises: (state, action: PayloadAction<Cruise[]>) => {
+      state.cruises = action.payload;
+    },
+    setTotalArea: (state, action: PayloadAction<number>) => {
+      state.totalArea = action.payload;
+    },
+  },
 });
+
+export const { setCruises, setTotalArea } = mainSlice.actions;
